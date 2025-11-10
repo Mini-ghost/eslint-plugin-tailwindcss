@@ -199,6 +199,15 @@ ruleTester.run("shorthands", rule, {
       code: `<div class="h-custom w-custom">h-custom & w-custom don't exist... no size-*</div>`,
       options: customSizeOnlyOptions,
     },
+    {
+      code: `<div class="scroll-px-3">Already using scroll-padding shorthand</div>`,
+    },
+    {
+      code: `<div class="scroll-pt-3 scroll-pb-4">Different scroll-padding values</div>`,
+    },
+    {
+      code: `<div class="scroll-ml-2 md:scroll-mr-2">Different variants for scroll-margin</div>`,
+    },
   ],
 
   invalid: [
@@ -831,6 +840,41 @@ ruleTester.run("shorthands", rule, {
         generateError(["sm:items-start", "sm:justify-items-start"], "sm:place-items-start"),
         generateError(["md:self-end", "md:justify-self-end"], "md:place-self-end"),
       ],
+    },
+    {
+      code: `<div class="scroll-pl-3 scroll-pr-3">Possible shorthand for scroll-padding-x</div>`,
+      output: `<div class="scroll-px-3">Possible shorthand for scroll-padding-x</div>`,
+      errors: [generateError(["scroll-pl-3", "scroll-pr-3"], "scroll-px-3")],
+    },
+    {
+      code: `<div class="scroll-pt-4 scroll-pb-4">Possible shorthand for scroll-padding-y</div>`,
+      output: `<div class="scroll-py-4">Possible shorthand for scroll-padding-y</div>`,
+      errors: [generateError(["scroll-pt-4", "scroll-pb-4"], "scroll-py-4")],
+    },
+    {
+      code: `<div class="scroll-px-3 scroll-py-3">Possible shorthand for scroll-padding</div>`,
+      output: `<div class="scroll-p-3">Possible shorthand for scroll-padding</div>`,
+      errors: [generateError(["scroll-px-3", "scroll-py-3"], "scroll-p-3")],
+    },
+    {
+      code: `<div class="scroll-ml-2 scroll-mr-2">Possible shorthand for scroll-margin-x</div>`,
+      output: `<div class="scroll-mx-2">Possible shorthand for scroll-margin-x</div>`,
+      errors: [generateError(["scroll-ml-2", "scroll-mr-2"], "scroll-mx-2")],
+    },
+    {
+      code: `<div class="scroll-mt-1 scroll-mb-1">Possible shorthand for scroll-margin-y</div>`,
+      output: `<div class="scroll-my-1">Possible shorthand for scroll-margin-y</div>`,
+      errors: [generateError(["scroll-mt-1", "scroll-mb-1"], "scroll-my-1")],
+    },
+    {
+      code: `<div class="scroll-mx-2 scroll-my-2">Possible shorthand for scroll-margin</div>`,
+      output: `<div class="scroll-m-2">Possible shorthand for scroll-margin</div>`,
+      errors: [generateError(["scroll-mx-2", "scroll-my-2"], "scroll-m-2")],
+    },
+    {
+      code: `<div class="scroll-pt-5 scroll-pr-5 scroll-pb-5 scroll-pl-5">All scroll-padding directions</div>`,
+      output: `<div class="scroll-p-5">All scroll-padding directions</div>`,
+      errors: [generateError(["scroll-pt-5", "scroll-pr-5", "scroll-pb-5", "scroll-pl-5"], "scroll-p-5")],
     },
   ],
 });
